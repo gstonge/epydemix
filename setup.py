@@ -12,7 +12,7 @@ setup(
     description="A Python package for epidemic modeling, simulation, and calibration",  
     long_description=long_description,  
     long_description_content_type="text/markdown",  
-    url="https://github.com/ngozzi/epydemix", 
+    url="https://github.com/epistorm/epydemix", 
     packages=find_packages(),  
     include_package_data=True,  
     classifiers=[
