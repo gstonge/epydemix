@@ -33,7 +33,7 @@ dependencies = [
 [project.urls]
 # Optional links related to your project
 homepage = "https://epydemix.webflow.io/"  
-repository = "https://github.com/ngozzi/epydemix"
+repository = "https://github.com/epistorm/epydemix"
 documentation = "https://epydemix.readthedocs.io/en/latest/"
 
 [tool.setuptools]
