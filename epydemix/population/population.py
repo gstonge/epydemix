@@ -3,6 +3,7 @@ import pandas as pd
 import os 
 from collections import OrderedDict
 from typing import List, Dict, Optional
+from pathlib import Path
 
 demographic_grouping_prem = OrderedDict({
     "0-4": np.arange(0, 5).astype(str), 
@@ -510,71 +511,67 @@ def load_epydemix_population(
             age_group_mapping: Optional[Dict[str, List[str]]] = None,
             supported_contacts_sources: List[str] = ["prem_2017", "prem_2021", "mistry_2021"],
             path_to_data_github: str = "https://raw.githubusercontent.com/epistorm/epydemix-data/main/") -> 'Population':
-    """
-    Loads population and contact matrix data for a specified population.
-
-    Args:
-        population_name (str): The name of the population to load.
-        contacts_source (Optional[str]): The source of contact matrices. If None, the default source is retrieved.
-        path_to_data (Optional[str]): The local path to the data directory. If None, data is fetched from GitHub.
-        layers (List[str]): The layers of contact matrices to load.
-        age_group_mapping (Optional[Dict[str, List[str]]]): Mapping of age groups. If None, defaults based on contacts_source.
-        supported_contacts_sources (List[str]): List of supported contact sources.
-        path_to_data_github (str): The GitHub URL for fetching data if local path is not provided.
-
-    Returns:
-        Population: An instance of the Population class with the loaded data.
-
-    Raises:
-        ValueError: If any provided value is not valid or if there are issues with the data files.
-    """ 
     
     population = Population(name=population_name)
 
-    # if path is None tries online import
+    # If path_to_data is None, use the GitHub URL
+    is_remote = False
     if path_to_data is None:
         path_to_data = path_to_data_github
-    
-    # check location is supported
+        is_remote = True  # Mark as remote URL
+
+    # Validate population name
     validate_population_name(population_name, path_to_data)
 
-    # check if contacts_source is supported
+    # Check if contacts_source is supported
     if contacts_source is None: 
         contacts_source = get_primary_contacts_source(population_name, path_to_data)
     validate_contacts_source(contacts_source, supported_contacts_sources)
 
-    # load the demographic data
-    Nk = pd.read_csv(os.path.join(path_to_data, "data", population_name, "demographic/age_distribution.csv"))
-    
-    # if contact matrices are from Prem et al 2017 or Prem et al 2021 we need to aggregate population data
+    # Load demographic data
+    demographic_file = f"data/{population_name}/demographic/age_distribution.csv"
+
+    if is_remote:
+        df = pd.read_csv(path_to_data + demographic_file)  # Fetch from URL
+    else:
+        demographic_path = Path(path_to_data) / "data" / population_name / "demographic" / "age_distribution.csv"
+        df = pd.read_csv(demographic_path)
+
+    Nk = df  # Assign the loaded DataFrame
+
+    # Handle contact matrices aggregation
     if contacts_source in ["prem_2017", "prem_2021"]: 
         Nk = aggregate_demographic(Nk, demographic_grouping_prem)
 
-    # get age group mapping
+    # Determine age group mapping
     if age_group_mapping is None: 
-        if contacts_source in ["prem_2017", "prem_2021"]:
-            age_group_mapping = contacts_age_group_mapping_prem
-        else: 
-            age_group_mapping = contacts_age_group_mapping_mistry
+        age_group_mapping = contacts_age_group_mapping_prem if contacts_source in ["prem_2017", "prem_2021"] else contacts_age_group_mapping_mistry
 
-    # validate age group mapping
     validate_age_group_mapping(age_group_mapping, Nk.group_name.values)
-        
-    # aggregate population to new age groups
+
+    # Aggregate population data
     Nk_new = aggregate_demographic(Nk, age_group_mapping)
     population.add_population(Nk=Nk_new["value"].values, Nk_names=Nk_new["group_name"].values)
 
-    # load the contact matrices
+    # Load contact matrices
     for layer_name in layers:
-        C = pd.read_csv(os.path.join(path_to_data, "data", population_name, "contact_matrices", contacts_source, f"contacts_matrix_{layer_name}.csv"), header=None).values
+        contact_matrix_file = f"data/{population_name}/contact_matrices/{contacts_source}/contacts_matrix_{layer_name}.csv"
 
-        # aggregate contact matrices to new age groups
-        C_aggr = aggregate_matrix(C, 
-                                  old_population=Nk["value"].values, 
-                                  new_population=Nk_new["value"].values, 
-                                  age_group_mapping=age_group_mapping, 
-                                  old_age_groups_idx={name: idx for idx, name in enumerate(Nk.group_name.values)}, 
-                                  new_age_group_idx={name: idx for idx, name in enumerate(age_group_mapping.keys())})
+        if is_remote:
+            C = pd.read_csv(path_to_data + contact_matrix_file, header=None).values  # Load from URL
+        else:
+            contact_matrix_path = Path(path_to_data) / "data" / population_name / "contact_matrices" / contacts_source / f"contacts_matrix_{layer_name}.csv"
+            C = pd.read_csv(contact_matrix_path, header=None).values  # Load from local file
+
+        # Aggregate contact matrices
+        C_aggr = aggregate_matrix(
+            C, 
+            old_population=Nk["value"].values, 
+            new_population=Nk_new["value"].values, 
+            age_group_mapping=age_group_mapping, 
+            old_age_groups_idx={name: idx for idx, name in enumerate(Nk.group_name.values)}, 
+            new_age_group_idx={name: idx for idx, name in enumerate(age_group_mapping.keys())}
+        )
 
         population.add_contact_matrix(C_aggr, layer_name=layer_name)
 
