@@ -18,7 +18,7 @@
 To install the latest version of `epydemix` from TestPyPI, use the following command:
 
 ```bash
-pip install -i https://test.pypi.org/simple/ epydemix
+pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ epydemix
 ```
 
 ---
