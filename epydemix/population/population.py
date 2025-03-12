@@ -509,7 +509,7 @@ def load_epydemix_population(
             layers: List[str] = ["school", "work", "home", "community"],
             age_group_mapping: Optional[Dict[str, List[str]]] = None,
             supported_contacts_sources: List[str] = ["prem_2017", "prem_2021", "mistry_2021"],
-            path_to_data_github: str = "https://raw.githubusercontent.com/ngozzi/epydemix-data/main/") -> 'Population':
+            path_to_data_github: str = "https://raw.githubusercontent.com/epistorm/epydemix-data/main/") -> 'Population':
     """
     Loads population and contact matrix data for a specified population.
 
@@ -581,7 +581,7 @@ def load_epydemix_population(
     return population
 
 
-def get_available_locations(path_to_data: str = "https://raw.githubusercontent.com/ngozzi/epydemix-data/main/") -> pd.DataFrame: 
+def get_available_locations(path_to_data: str = "https://raw.githubusercontent.com/epistorm/epydemix-data/main/") -> pd.DataFrame: 
     """
     Returns a list of available locations.
 

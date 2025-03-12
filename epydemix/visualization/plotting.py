@@ -443,7 +443,7 @@ def plot_selected_trajectories(calibration_results, ax=None, show_data=True, col
 
 
 def plot_contact_matrix(population: Any,
-                       layer: str = "all",
+                       layer: str,
                        ax: Optional[plt.Axes] = None,
                        cmap: str = "YlOrRd",
                        show_values: bool = False,
