@@ -7,6 +7,7 @@ from epydemix.population import Population
 from epydemix.population.population import (
     aggregate_matrix,
     aggregate_demographic,
+    load_epydemix_population,
     validate_population_name,
     get_primary_contacts_source,
     validate_contacts_source,
@@ -154,3 +155,7 @@ def test_population_repr(basic_population):
     assert "test_population" in repr_str
     assert "Demographic groups: 3" in repr_str
     assert "Contact matrices: 1" in repr_str 
+
+
+def test_online_population_import(): 
+    population = load_epydemix_population("Italy")
