@@ -512,6 +512,25 @@ def load_epydemix_population(
             supported_contacts_sources: List[str] = ["prem_2017", "prem_2021", "mistry_2021"],
             path_to_data_github: str = "https://raw.githubusercontent.com/epistorm/epydemix-data/main/") -> 'Population':
     
+    """
+    Loads population and contact matrix data for a specified population.
+
+    Args:
+        population_name (str): The name of the population to load.
+        contacts_source (Optional[str]): The source of contact matrices. If None, the default source is retrieved.
+        path_to_data (Optional[str]): The local path to the data directory. If None, data is fetched from GitHub.
+        layers (List[str]): The layers of contact matrices to load.
+        age_group_mapping (Optional[Dict[str, List[str]]]): Mapping of age groups. If None, defaults based on contacts_source.
+        supported_contacts_sources (List[str]): List of supported contact sources.
+        path_to_data_github (str): The GitHub URL for fetching data if local path is not provided.
+
+    Returns:
+        Population: An instance of the Population class with the loaded data.
+
+    Raises:
+        ValueError: If any provided value is not valid or if there are issues with the data files.
+    """ 
+        
     population = Population(name=population_name)
 
     # If path_to_data is None, use the GitHub URL
@@ -578,16 +597,27 @@ def load_epydemix_population(
     return population
 
 
-def get_available_locations(path_to_data: str = "https://raw.githubusercontent.com/epistorm/epydemix-data/main/") -> pd.DataFrame: 
+def get_available_locations(path_to_data: Optional[str] = None,
+                            path_to_data_github: str = "https://raw.githubusercontent.com/epistorm/epydemix-data/main/") -> pd.DataFrame: 
     """
     Returns a list of available locations.
 
     Args:
-        path_to_data (str): The path to the directory containing the 'locations.csv' file.
+        path_to_data (Optional[str]): The local path to the data directory. If None, data is fetched from GitHub.
+        path_to_data_github (str): The GitHub URL for fetching data if local path is not provided.
 
     Returns:
         pd.DataFrame: A DataFrame containing the list of available locations.
     """
 
-    locations_file = os.path.join(path_to_data, "locations.csv")
+    # If path_to_data is None, use the GitHub URL
+    is_remote = False
+    if path_to_data is None:
+        path_to_data = path_to_data_github
+        is_remote = True  # Mark as remote URL
+
+    if is_remote:
+        locations_file = path_to_data + "locations.csv"
+    else:
+        locations_file = Path(path_to_data) / "locations.csv"    
     return pd.read_csv(locations_file)

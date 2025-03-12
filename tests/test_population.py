@@ -9,6 +9,7 @@ from epydemix.population.population import (
     aggregate_demographic,
     load_epydemix_population,
     validate_population_name,
+    get_available_locations,
     get_primary_contacts_source,
     validate_contacts_source,
     validate_age_group_mapping
@@ -159,3 +160,4 @@ def test_population_repr(basic_population):
 
 def test_online_population_import(): 
     population = load_epydemix_population("Italy")
+    get_available_locations()
