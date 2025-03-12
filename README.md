@@ -1,14 +1,14 @@
 # Epydemix, the ABC of Epidemics
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Read the Docs](https://readthedocs.org/projects/epydemix/badge/?version=latest)](https://epydemix.readthedocs.io/en/latest/?badge=latest)
-![Codecov](https://codecov.io/gh/ngozzi/epydemix/branch/main/graph/badge.svg)
+![Codecov](https://codecov.io/gh/epistorm/epydemix/branch/main/graph/badge.svg)
 
 ![Alt text](https://cdn.prod.website-files.com/67bde9057c9d78157874e100/67c1d1122127f0a9ce202197_epydemix-logo-p-500.png)
 
 
-**[Documentation](https://epydemix.readthedocs.io/en/latest/)** | **[Website](https://epydemix.webflow.io/)** | **[Tutorials](https://github.com/ngozzi/epydemix/tree/main/tutorials)**
+**[Documentation](https://epydemix.readthedocs.io/en/latest/)** | **[Website](https://epydemix.webflow.io/)** | **[Tutorials](https://github.com/epistorm/epydemix/tree/main/tutorials)**
 
-**Epydemix** is a Python package for epidemic modeling. It provides tools to create, calibrate, and analyze epidemic models, allowing users to simulate the spread of infectious diseases using different compartmental models, contact layers, and calibration techniques. It is designed to be used in conjunction with the [epydemix-data](https://github.com/ngozzi/epydemix-data/) package to load population and contact matrix data.
+**Epydemix** is a Python package for epidemic modeling. It provides tools to create, calibrate, and analyze epidemic models, allowing users to simulate the spread of infectious diseases using different compartmental models, contact layers, and calibration techniques. It is designed to be used in conjunction with the [epydemix-data](https://github.com/epistorm/epydemix-data/) package to load population and contact matrix data.
 
 
 ## Installation
@@ -69,18 +69,18 @@ plot_quantiles(df_quantiles, columns=["I_total", "S_total", "R_total"])
 ### Tutorials
 We provide a series of tutorials to help you get started with **epydemix**.
 
-- [Tutorial 1](https://github.com/ngozzi/epydemix/blob/main/tutorials/1_Model_Definition_and_Simulation.ipynb): An Introduction to Model Definition and Simulation
-- [Tutorial 2](https://github.com/ngozzi/epydemix/blob/main/tutorials/2_Modeling_with_Population_Data.ipynb): Using Population Data from Epydemix Data
-- [Tutorial 3](https://github.com/ngozzi/epydemix/blob/main/tutorials/3_Modeling_Interventions.ipynb): Modeling Non-pharmaceutical Interventions
-- [Tutorial 4](https://github.com/ngozzi/epydemix/blob/main/tutorials/4_Model_Calibration_part1.ipynb): Model Calibration with ABC (Part 1)
-- [Tutorial 5](https://github.com/ngozzi/epydemix/blob/main/tutorials/5_Model_Calibration_part2.ipynb): Model Calibration with ABC (Part 2)
-- [Tutorial 6](https://github.com/ngozzi/epydemix/blob/main/tutorials/6_Advanced_Modeling_Features.ipynb): Advanced Modeling Features
-- [Tutorial 7](https://github.com/ngozzi/epydemix/blob/main/tutorials/7_Covid-19_Example.ipynb): COVID-19 Case Study
+- [Tutorial 1](https://github.com/epistorm/epydemix/blob/main/tutorials/1_Model_Definition_and_Simulation.ipynb): An Introduction to Model Definition and Simulation
+- [Tutorial 2](https://github.com/epistorm/epydemix/blob/main/tutorials/2_Modeling_with_Population_Data.ipynb): Using Population Data from Epydemix Data
+- [Tutorial 3](https://github.com/epistorm/epydemix/blob/main/tutorials/3_Modeling_Interventions.ipynb): Modeling Non-pharmaceutical Interventions
+- [Tutorial 4](https://github.com/epistorm/epydemix/blob/main/tutorials/4_Model_Calibration_part1.ipynb): Model Calibration with ABC (Part 1)
+- [Tutorial 5](https://github.com/epistorm/epydemix/blob/main/tutorials/5_Model_Calibration_part2.ipynb): Model Calibration with ABC (Part 2)
+- [Tutorial 6](https://github.com/epistorm/epydemix/blob/main/tutorials/6_Advanced_Modeling_Features.ipynb): Advanced Modeling Features
+- [Tutorial 7](https://github.com/epistorm/epydemix/blob/main/tutorials/7_Covid-19_Example.ipynb): COVID-19 Case Study
 
 
 ## Epydemix Data
 
-**epydemix** also provides access to a wealth of real-world population and contact matrix data through the [**epydemix_data**](https://github.com/ngozzi/epydemix-data/) module. This dataset allows you to load predefined population structures, including age distribution and contact matrices for over 400 locations globally. You can use this data to create realistic simulations of disease spread in different geographies.
+**epydemix** also provides access to a wealth of real-world population and contact matrix data through the [**epydemix_data**](https://github.com/epistorm/epydemix-data/) module. This dataset allows you to load predefined population structures, including age distribution and contact matrices for over 400 locations globally. You can use this data to create realistic simulations of disease spread in different geographies.
 
 ### Example of Loading Population Data
 
@@ -100,7 +100,7 @@ model.set_population(population)
 
 Epydemix can load data either locally from a folder or directly from online sources, making it easy to simulate a wide range of epidemic models on real population data.
 
-For more information about the available population and contact matrices and to download the data, please visit the [dedicated repository](https://github.com/ngozzi/epydemix-data/).
+For more information about the available population and contact matrices and to download the data, please visit the [dedicated repository](https://github.com/epistorm/epydemix-data/).
 
 
 
