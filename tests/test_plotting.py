@@ -266,6 +266,7 @@ def test_plot_contact_matrix(mock_population_data):
     # Test basic contact matrix plot
     ax = plot_contact_matrix(
         population=population,
+        layer="all",
         ax=ax,
         title="Contact Matrix",
         cmap="YlOrRd",
