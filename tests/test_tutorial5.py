@@ -29,7 +29,7 @@ def mock_population():
 
 def test_calibration_advanced(mock_population):
     # import data and divide data into calibration and projection periods
-    data = pd.read_csv('https://raw.githubusercontent.com/ngozzi/epydemix/refs/heads/main/tutorials/data/incidence_data.csv')
+    data = pd.read_csv('https://raw.githubusercontent.com/epistorm/epydemix/refs/heads/main/tutorials/data/incidence_data.csv')
     data["date"] = pd.to_datetime(data["date"])
     data_calibration = data.iloc[:-40]
     data_projection = data.iloc[-40:]
