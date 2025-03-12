@@ -1,9 +1,9 @@
 Welcome to Epydemix's Documentation!
 ====================================
 
-The source code for Epydemix is available on GitHub: `Epydemix Repository <https://github.com/ngozzi/epydemix>`_.
+The source code for Epydemix is available on GitHub: `Epydemix Repository <https://github.com/epistorm/epydemix>`_.
 
-.. image:: https://img.shields.io/github/stars/ngozzi/epydemix?style=social
+.. image:: https://img.shields.io/github/stars/epistorm/epydemix?style=social
    :target: https://github.com/ngozzi/epydemix
    :alt: GitHub Repo
 
@@ -15,8 +15,8 @@ The source code for Epydemix is available on GitHub: `Epydemix Repository <https
     :target: https://www.gnu.org/licenses/gpl-3.0
     :alt: License: GPL v3
 
-.. image:: https://codecov.io/gh/ngozzi/epydemix/branch/main/graph/badge.svg
-   :target: https://codecov.io/gh/ngozzi/epydemix
+.. image:: https://codecov.io/gh/epistorm/epydemix/branch/main/graph/badge.svg
+   :target: https://codecov.io/gh/epistorm/epydemix
    :alt: Code coverage status
 
 
@@ -50,12 +50,12 @@ Get started
 We provide a series of tutorials to help you get started with Epydemix:
 
 - `Tutorial 1: Model Definition and Simulation <https://github.com/ngozzi/epydemix/blob/main/tutorials/1_Model_Definition_and_Simulation.ipynb>`_
-- `Tutorial 2: Using Population Data <https://github.com/ngozzi/epydemix/blob/main/tutorials/2_Modeling_with_Population_Data.ipynb>`_
-- `Tutorial 3: Modeling Interventions <https://github.com/ngozzi/epydemix/blob/main/tutorials/3_Modeling_Interventions.ipynb>`_
-- `Tutorial 4: Model Calibration with ABC (Part 1) <https://github.com/ngozzi/epydemix/blob/main/tutorials/4_Model_Calibration_part1.ipynb>`_
-- `Tutorial 5: Model Calibration with ABC (Part 2) <https://github.com/ngozzi/epydemix/blob/main/tutorials/5_Model_Calibration_part2.ipynb>`_
-- `Tutorial 6: Advanced Modeling Features <https://github.com/ngozzi/epydemix/blob/main/tutorials/6_Advanced_Modeling_Features.ipynb>`_
-- `Tutorial 7: COVID-19 Case Study <https://github.com/ngozzi/epydemix/blob/main/tutorials/7_Covid-19_Example.ipynb>`_
+- `Tutorial 2: Using Population Data <https://github.com/epistorm/epydemix/blob/main/tutorials/2_Modeling_with_Population_Data.ipynb>`_
+- `Tutorial 3: Modeling Interventions <https://github.com/epistorm/epydemix/blob/main/tutorials/3_Modeling_Interventions.ipynb>`_
+- `Tutorial 4: Model Calibration with ABC (Part 1) <https://github.com/epistorm/epydemix/blob/main/tutorials/4_Model_Calibration_part1.ipynb>`_
+- `Tutorial 5: Model Calibration with ABC (Part 2) <https://github.com/epistorm/epydemix/blob/main/tutorials/5_Model_Calibration_part2.ipynb>`_
+- `Tutorial 6: Advanced Modeling Features <https://github.com/epistorm/epydemix/blob/main/tutorials/6_Advanced_Modeling_Features.ipynb>`_
+- `Tutorial 7: COVID-19 Case Study <https://github.com/epistorm/epydemix/blob/main/tutorials/7_Covid-19_Example.ipynb>`_
 
 
 .. toctree::
