@@ -3,7 +3,7 @@
 [![Read the Docs](https://readthedocs.org/projects/epydemix/badge/?version=latest)](https://epydemix.readthedocs.io/en/latest/?badge=latest)
 ![Codecov](https://codecov.io/gh/epistorm/epydemix/branch/main/graph/badge.svg)
 
-![Alt text](https://cdn.prod.website-files.com/67bde9057c9d78157874e100/67c1d1122127f0a9ce202197_epydemix-logo-p-500.png)
+![Alt text](https://github.com/epistorm/epydemix/blob/main/tutorials/img/epydemix-logo.png)
 
 
 **[Documentation](https://epydemix.readthedocs.io/en/latest/)** | **[Website](https://www.epydemix.org/)** | **[Tutorials](https://github.com/epistorm/epydemix/tree/main/tutorials)**
