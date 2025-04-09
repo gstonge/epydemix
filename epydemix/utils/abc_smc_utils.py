@@ -3,6 +3,14 @@ from scipy.stats import norm
 from typing import Dict, List, Tuple, Optional, Union, Any
 from abc import ABC, abstractmethod
 
+
+def fast_normal_pdf(x, mean, std):
+    var = std * std
+    denom = np.sqrt(2 * np.pi * var)
+    num = np.exp(-0.5 * ((x - mean) ** 2) / var)
+    return num / denom
+
+
 class Perturbation(ABC):
     def __init__(self, param_name):
         self.param_name = param_name
@@ -37,7 +45,7 @@ class DefaultPerturbationContinuous(Perturbation):
 
     def pdf(self, x, center):
         """Evaluate the PDF of the kernel."""
-        return norm.pdf(x, center, self.std)
+        return fast_normal_pdf(x, center, self.std)
 
     def update(self, particles, weights, param_names):
         """Update the standard deviation based on previous generation variance."""
@@ -51,8 +59,9 @@ class DefaultPerturbationDiscrete(Perturbation):
     def __init__(self, param_name, prior, jump_probability=0.3):
         super().__init__(param_name)
         self.prior = prior  
-        self.jump_probability = jump_probability
         self.support = np.arange(self.prior.support()[0], self.prior.support()[1]+1)
+        self.jump_probability = jump_probability
+        self.rest_prob = jump_probability / (len(self.support) - 1)
 
     def propose(self, x):
         """Propose a new value for the discrete parameter."""
@@ -68,7 +77,7 @@ class DefaultPerturbationDiscrete(Perturbation):
         if x == center:
             return 1 - self.jump_probability
         elif x in self.support:
-            return self.jump_probability / (len(self.support) - 1)
+            return self.rest_prob
         return 0
 
     def update(self, particles, weights, param_names):
