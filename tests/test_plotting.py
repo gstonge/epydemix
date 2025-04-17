@@ -172,7 +172,7 @@ def test_plot_styling(mock_quantiles_data):
         columns=["I_total"],
         ax=ax,
         y_scale="log",
-        grid=True,
+        show_grid=True,
         ci_alpha=0.2,
         colors="red",
         show_legend=False
@@ -270,7 +270,7 @@ def test_plot_contact_matrix(mock_population_data):
         ax=ax,
         title="Contact Matrix",
         cmap="YlOrRd",
-        colorbar=True
+        show_colorbar=True
     )
     
     # Check plot elements
