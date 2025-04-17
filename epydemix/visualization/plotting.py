@@ -50,7 +50,7 @@ def plot_quantiles(df_quantiles: pd.DataFrame,
                   colors: Optional[Union[List[str], str]] = None,
                   labels: Optional[Union[List[str], str]] = None,
                   y_scale: str = "linear",  
-                  grid: bool = True) -> plt.Axes:
+                  show_grid: bool = True) -> plt.Axes:
     """
     Plots quantiles for compartments over time with optional observed data.
 
@@ -73,7 +73,7 @@ def plot_quantiles(df_quantiles: pd.DataFrame,
         colors: Custom colors for lines
         labels: Custom labels for legend
         y_scale: Scale for y-axis ('linear' or 'log')
-        grid: Whether to show grid lines
+        show_grid: Whether to show grid lines
 
     Returns:
         plt.Axes: The matplotlib axes object
@@ -126,7 +126,7 @@ def plot_quantiles(df_quantiles: pd.DataFrame,
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     
-    if grid:
+    if show_grid:
         ax.grid(axis="y", linestyle="--", linewidth=0.3, alpha=0.5, zorder=0)
     
     # Labels and formatting
@@ -155,7 +155,7 @@ def plot_posterior_distribution(posterior: pd.DataFrame,
                               prior_range: bool = False,
                               title: Optional[str] = None,
                               fontsize: int = 10,
-                              grid: bool = True,
+                              show_grid: bool = True,
                               show_kde: bool = True,
                               show_rug: bool = False,
                               figsize: Tuple[int, int] = (10, 4),
@@ -180,7 +180,7 @@ def plot_posterior_distribution(posterior: pd.DataFrame,
         prior_range: Whether to set x-axis limits to prior range
         title: Plot title. If None, auto-generates
         fontsize: Base font size for labels and ticks
-        grid: Whether to show grid lines
+        show_grid: Whether to show grid lines
         show_kde: Whether to show KDE curve with histogram (only for kind='hist')
         show_rug: Whether to show rug plot
         figsize: Figure size if creating new figure
@@ -261,7 +261,7 @@ def plot_posterior_distribution(posterior: pd.DataFrame,
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     
-    if grid:
+    if show_grid:
         ax.grid(axis="y", linestyle="--", linewidth=0.3, alpha=0.5)
 
     # Set axis limits based on prior range or explicit limits
@@ -304,7 +304,7 @@ def plot_posterior_distribution_2d(posterior: pd.DataFrame,
                                  title: Optional[str] = None,
                                  fontsize: int = 10,
                                  cmap: Optional[str] = None,
-                                 grid: bool = True,
+                                 show_grid: bool = True,
                                  levels: int = 10,
                                  figsize: Tuple[int, int] = (6, 6),
                                  scatter: bool = False,
@@ -332,7 +332,7 @@ def plot_posterior_distribution_2d(posterior: pd.DataFrame,
         title: Plot title. If None, auto-generates
         fontsize: Base font size for labels and ticks
         cmap: Colormap for 2D histogram/kde
-        grid: Whether to show grid lines
+        show_grid: Whether to show grid lines
         levels: Number of contour levels for kde
         figsize: Figure size if creating new figure
         scatter: Whether to overlay scatter plot on kde
@@ -401,7 +401,7 @@ def plot_posterior_distribution_2d(posterior: pd.DataFrame,
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     
-    if grid:
+    if show_grid:
         ax.grid(linestyle="--", linewidth=0.3, alpha=0.5)
 
     # Set axis limits based on prior ranges or explicit limits
@@ -448,15 +448,14 @@ def plot_contact_matrix(population: Any,
                        cmap: str = "YlOrRd",
                        show_values: bool = False,
                        title: Optional[str] = None,
-                       colorbar: bool = True,
+                       show_colorbar: bool = True,
                        fmt: str = ".1f",
                        fontsize: int = 8,
                        rotation: int = 45,
                        figsize: Tuple[int, int] = (10, 8),
                        vmin: Optional[float] = None,
                        vmax: Optional[float] = None,
-                       origin: str = "lower",
-                       symmetric: bool = False) -> plt.Axes:
+                       origin: str = "lower") -> plt.Axes:
     """
     Plot a contact matrix heatmap.
     
@@ -475,7 +474,6 @@ def plot_contact_matrix(population: Any,
         vmin: Minimum value for colormap scaling
         vmax: Maximum value for colormap scaling
         origin: Whether to plot the matrix with the origin at the bottom left (default) or top left
-        symmetric: If True, centers colormap around 0 with symmetric limits
         
     Returns:
         plt.Axes: The matplotlib axes object
@@ -493,14 +491,6 @@ def plot_contact_matrix(population: Any,
     if ax is None:
         _, ax = plt.subplots(figsize=figsize)
     
-    # Handle colormap scaling
-    if symmetric:
-        abs_max = max(abs(matrix.min()), abs(matrix.max()))
-        vmin = -abs_max if vmin is None else vmin
-        vmax = abs_max if vmax is None else vmax
-        cmap = plt.get_cmap(cmap).copy()
-        cmap.set_bad('gray')
-    
     # Create heatmap
     im = ax.imshow(matrix, 
                    cmap=cmap, 
@@ -510,7 +500,7 @@ def plot_contact_matrix(population: Any,
                    origin=origin)
     
     # Show colorbar
-    if colorbar:
+    if show_colorbar:
         cbar = plt.colorbar(im, ax=ax)
         cbar.set_label('Contacts per day', fontsize=fontsize)
         cbar.ax.tick_params(labelsize=fontsize)
@@ -522,10 +512,7 @@ def plot_contact_matrix(population: Any,
                 value = matrix[i, j]
                 text = format(value, fmt)
                 # Determine text color based on background
-                if symmetric:
-                    text_color = 'white' if abs(value) > abs_max/2 else 'black'
-                else:
-                    text_color = 'white' if value > (vmax or matrix.max())/2 else 'black'
+                text_color = 'white' if value > (vmax or matrix.max())/2 else 'black'
                 ax.text(j, i, text,
                        ha="center", va="center",
                        color=text_color,
@@ -534,7 +521,7 @@ def plot_contact_matrix(population: Any,
     # Set labels and ticks
     ax.set_xticks(np.arange(len(population.Nk_names)))
     ax.set_yticks(np.arange(len(population.Nk_names)))
-    ax.set_xticklabels(population.Nk_names, rotation=rotation, ha='right')
+    ax.set_xticklabels(population.Nk_names, rotation=rotation, ha='center')
     ax.set_yticklabels(population.Nk_names)
     
     # Adjust tick label sizes
@@ -543,7 +530,7 @@ def plot_contact_matrix(population: Any,
     # Set title
     if title is None:
         title = f"Contact Matrix - {layer}"
-    ax.set_title(title, fontsize=fontsize + 2, pad=20)
+    ax.set_title(title, fontsize=fontsize + 2)
     
     # Add labels
     ax.set_xlabel("Age group (contacted)", fontsize=fontsize)
@@ -569,7 +556,7 @@ def plot_population(population: Any,
                    rotation: int = 45,
                    figsize: Tuple[int, int] = (10, 6),
                    bar_width: float = 0.8,
-                   grid: bool = True,
+                   show_grid: bool = True,
                    ylabel: Optional[str] = None,
                    xlabel: str = "Age group",
                    show_values: bool = True,
@@ -588,7 +575,7 @@ def plot_population(population: Any,
         rotation: Rotation angle for x-axis labels
         figsize: Figure size if creating new figure
         bar_width: Width of the bars (between 0 and 1)
-        grid: Whether to show grid lines
+        show_grid: Whether to show grid lines
         ylabel: Y-axis label. If None, uses default based on show_perc
         xlabel: X-axis label
         show_values: Whether to show values above bars
@@ -624,7 +611,7 @@ def plot_population(population: Any,
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     
-    if grid:
+    if show_grid:
         ax.grid(axis="y", linestyle="--", linewidth=0.3, alpha=0.5)
     
     # Labels
@@ -669,7 +656,7 @@ def plot_spectral_radius(epimodel: Any,
                         date_format: str = '%Y-%m-%d',
                         ylabel: Optional[str] = None,
                         xlabel: str = "Date",
-                        grid: bool = True,
+                        show_grid: bool = True,
                         alpha: float = 0.2,
                         legend_loc: str = "upper left") -> plt.Axes:
     """
@@ -690,7 +677,7 @@ def plot_spectral_radius(epimodel: Any,
         date_format: Format string for date labels
         ylabel: Y-axis label. If None, auto-generated based on normalize/show_perc
         xlabel: X-axis label
-        grid: Whether to show grid lines
+        show_grid: Whether to show grid lines
         alpha: Transparency for intervention highlights
         legend_loc: Location of the legend
 
@@ -742,7 +729,7 @@ def plot_spectral_radius(epimodel: Any,
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     
-    if grid:
+    if show_grid:
         ax.grid(axis="y", linestyle="--", alpha=0.3)
 
     # Format dates
@@ -780,7 +767,7 @@ def plot_distance_distribution(distances: Union[np.ndarray, List[float], pd.Seri
                              ylabel: Optional[str] = None,
                              title: Optional[str] = None,
                              fontsize: int = 10,
-                             grid: bool = True,
+                             show_grid: bool = True,
                              show_kde: bool = True,
                              show_rug: bool = False,
                              figsize: Tuple[int, int] = (10, 4),
@@ -803,7 +790,7 @@ def plot_distance_distribution(distances: Union[np.ndarray, List[float], pd.Seri
         ylabel: Y-axis label
         title: Plot title
         fontsize: Base font size for labels and ticks
-        grid: Whether to show grid lines
+        show_grid: Whether to show grid lines
         show_kde: Whether to show KDE curve with histogram (only for kind='hist')
         show_rug: Whether to show rug plot
         figsize: Figure size if creating new figure
@@ -893,7 +880,7 @@ def plot_distance_distribution(distances: Union[np.ndarray, List[float], pd.Seri
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     
-    if grid:
+    if show_grid:
         ax.grid(axis="y", linestyle="--", linewidth=0.3, alpha=0.5)
 
     # Set axis limits if provided
@@ -932,7 +919,7 @@ def plot_trajectories(stacked: Dict[str, np.ndarray],
                      colors: Optional[Union[List[str], str]] = None,
                      labels: Optional[Union[List[str], str]] = None,
                      y_scale: str = "linear",
-                     grid: bool = True,
+                     show_grid: bool = True,
                      dates: Optional[np.ndarray] = None) -> plt.Axes:
     """
     Plots individual trajectories over time with optional observed data.
@@ -953,7 +940,7 @@ def plot_trajectories(stacked: Dict[str, np.ndarray],
         colors: Custom colors for lines
         labels: Custom labels for legend
         y_scale: Scale for y-axis ('linear' or 'log')
-        grid: Whether to show grid lines
+        show_grid: Whether to show grid lines
         dates: Array of dates for x-axis. If None, uses range(timesteps)
 
     Returns:
@@ -1009,7 +996,7 @@ def plot_trajectories(stacked: Dict[str, np.ndarray],
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     
-    if grid:
+    if show_grid:
         ax.grid(axis="y", linestyle="--", linewidth=0.3, alpha=0.5, zorder=0)
     
     # Labels and formatting
