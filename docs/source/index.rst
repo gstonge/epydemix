@@ -20,7 +20,7 @@ The source code for Epydemix is available on GitHub: `Epydemix Repository <https
    :alt: Code coverage status
 
 
-.. image:: https://cdn.prod.website-files.com/67bde9057c9d78157874e100/67c1d1122127f0a9ce202197_epydemix-logo-p-500.png
+.. image:: https://github.com/epistorm/epydemix/blob/main/tutorials/img/epydemix-logo.png
    :width: 500px
    :align: center
 
