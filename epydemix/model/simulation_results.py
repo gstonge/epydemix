@@ -95,6 +95,8 @@ class SimulationResults:
     def get_quantiles_transitions(self, quantiles: Optional[List[float]] = None) -> pd.DataFrame:
         """
         Compute quantiles across all trajectories for transitions.
+        The name of the columns are the transitions names and the demographic groups, in the following format: `{source_compartment_name}_to_{target_compartment_name}_{demographic_group}`. 
+        For example, the column `S_to_I_total` contains the quantiles of the number of individuals transitioning from susceptible ("S") to infected ("I") individuals across all demographic groups ("total").
         """
         stacked = self.get_stacked_transitions()
         return self.get_quantiles(stacked, quantiles)
@@ -102,6 +104,8 @@ class SimulationResults:
     def get_quantiles_compartments(self, quantiles: Optional[List[float]] = None) -> pd.DataFrame:
         """
         Compute quantiles across all trajectories for compartments.
+        The name of the columns are the compartments names and the demographic groups, in the following format: `{compartment_name}_{demographic_group}`. 
+        For example, the column `I_total` contains the quantiles of the number of infected ("I") individuals across all demographic groups ("total").
         """
         stacked = self.get_stacked_compartments()
         return self.get_quantiles(stacked, quantiles)
