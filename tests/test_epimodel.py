@@ -85,7 +85,7 @@ def test_transition_management(basic_model):
 def test_parameter_management(basic_model):
     """Test parameter management"""
     # Test adding single parameter
-    basic_model.add_parameter(name="beta", value=0.3)
+    basic_model.add_parameter(parameter_name="beta", value=0.3)
     assert "beta" in basic_model.parameters
     assert basic_model.parameters["beta"] == 0.3
 

@@ -109,7 +109,7 @@ def test_varying_params(mock_population):
     plt.close()
 
     # add time-varying transmission rate to the model
-    model.add_parameter(name="transmission_rate", value=time_varying_transmission_rate)
+    model.add_parameter(parameter_name="transmission_rate", value=time_varying_transmission_rate)
 
     # run simulations
     results = model.run_simulations(start_date=start_date, end_date=end_date, Nsim=5)
@@ -128,7 +128,7 @@ def test_varying_params(mock_population):
     age_varying_transmission_rate = convert_to_2Darray([0.01, 0.02, 0.02, 0.02, 0.02])
 
     # add age-varying transmission rate to the model
-    model.add_parameter(name="transmission_rate", value=age_varying_transmission_rate)
+    model.add_parameter(parameter_name="transmission_rate", value=age_varying_transmission_rate)
 
     # run simulations
     results = model.run_simulations(start_date=start_date, end_date=end_date, Nsim=5)
@@ -146,7 +146,7 @@ def test_varying_params(mock_population):
             varying_transmission_rate[:, i] = create_seasonal_parameter(len(simulation_dates), 0.015, 0.025, 14) 
 
     # add time-varying and age-varying transmission rate to the model
-    model.add_parameter(name="transmission_rate", value=varying_transmission_rate)
+    model.add_parameter(parameter_name="transmission_rate", value=varying_transmission_rate)
 
     # run simulations
     results = model.run_simulations(start_date=start_date, end_date=end_date, Nsim=5)

@@ -274,38 +274,38 @@ class EpiModel:
 
 
     def add_parameter(self, 
-                    name: Optional[str] = None, 
+                    parameter_name: Optional[str] = None, 
                     value: Any = None, 
                     parameters_dict: Optional[Dict] = None) -> None:
         """ 
         Adds new parameters to the model.
 
         Args:
-            name (str, optional): The name of the parameter to add. Ignored if `parameters_dict` is provided.
+            parameter_name (str, optional): The name of the parameter to add. Ignored if `parameters_dict` is provided.
             value (any, optional): The value of the parameter to add. Ignored if `parameters_dict` is provided.
             parameters_dict (dict, optional): A dictionary of parameter names and values. If provided, 
-                `name` and `value` are ignored and the parameters are updated using this dictionary.
+                `parameter_name` and `value` are ignored and the parameters are updated using this dictionary.
 
         Raises:
-            ValueError: If neither `name`/`value` nor `parameters_dict` is provided.
+            ValueError: If neither `parameter_name`/`value` nor `parameters_dict` is provided.
         
         Returns:
             None
         """
         if parameters_dict:
             self.parameters.update(parameters_dict)
-        elif name is not None and value is not None:
-            self.parameters.update({name: value})
+        elif parameter_name is not None and value is not None:
+            self.parameters.update({parameter_name: value})
         else:
-            raise ValueError("Either name and value or parameters_dict must be provided.")
+            raise ValueError("Either parameter_name and value or parameters_dict must be provided.")
 
 
-    def get_parameter(self, name: str) -> Any:
+    def get_parameter(self, parameter_name: str) -> Any:
         """
         Retrieves the value of a specified parameter.
 
         Args:
-            name (str): The name of the parameter to retrieve.
+            parameter_name (str): The name of the parameter to retrieve.
 
         Returns:
             any: The value of the specified parameter.
@@ -313,15 +313,15 @@ class EpiModel:
         Raises:
             KeyError: If the parameter with the given name is not found.
         """
-        return self.parameters[name]
+        return self.parameters[parameter_name]
 
 
-    def delete_parameter(self, name: str) -> Any:
+    def delete_parameter(self, parameter_name: str) -> Any:
         """
         Deletes a parameter from the dictionary of the model's parameters.
 
         Args:
-            name (str): The name of the parameter to delete.
+            parameter_name (str): The name of the parameter to delete.
 
         Returns:
             any: The value of the deleted parameter.
@@ -329,7 +329,7 @@ class EpiModel:
         Raises:
             KeyError: If the parameter with the given name is not found.
         """
-        return self.parameters.pop(name)
+        return self.parameters.pop(parameter_name)
 
 
     def clear_parameters(self) -> None:
@@ -342,14 +342,14 @@ class EpiModel:
         self.parameters = {}
 
 
-    def override_parameter(self, start_date: str, end_date: str, name: str, value: Any) -> None:
+    def override_parameter(self, start_date: str, end_date: str, parameter_name: str, value: Any) -> None:
         """
         Adds an override for a parameter with the specified name.
 
         Args:
             start_date (str): The start date for the override period.
             end_date (str): The end date for the override period.
-            name (str): The name of the parameter to override.
+            parameter_name (str): The name of the parameter to override.
             value (any): The value to override the parameter with.
 
         Returns:
@@ -357,23 +357,23 @@ class EpiModel:
         """
         override_dict = {"start_date": start_date, "end_date": end_date, "value": value}
 
-        if name in self.overrides:
-            self.overrides[name].append(override_dict)
+        if parameter_name in self.overrides:
+            self.overrides[parameter_name].append(override_dict)
         else:
-            self.overrides[name] = [override_dict]
+            self.overrides[parameter_name] = [override_dict]
 
 
-    def delete_override(self, name: str) -> None:
+    def delete_override(self, parameter_name: str) -> None:
         """
         Deletes overrides for a specific parameter.
 
         Args:
-            name (str): The name of the parameter whose overrides are to be deleted.
+            parameter_name (str): The name of the parameter whose overrides are to be deleted.
 
         Returns:
             None
         """
-        self.overrides.pop(name, None)
+        self.overrides.pop(parameter_name, None)
 
 
     def clear_overrides(self) -> None:
