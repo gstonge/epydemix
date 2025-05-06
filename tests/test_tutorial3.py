@@ -41,8 +41,8 @@ def test_modeling_interventions(mock_population):
     # compute contact reductions (in order to plot them)
     model_interventions.compute_contact_reductions(simulation_dates)
 
-    # plot
-    plot_spectral_radius(model_interventions, legend_loc="center right")
+    # plot percentage change in spectral radius with respect to the initial value
+    plot_spectral_radius(model_interventions, legend_loc="center right", show_perc=True)
     plt.close()
     
     model_interventions.override_parameter(start_date="2024-02-01", 

@@ -646,8 +646,7 @@ def plot_spectral_radius(epimodel: Any,
                         ax: Optional[plt.Axes] = None, 
                         title: Optional[str] = None, 
                         color: str = "k", 
-                        normalize: bool = False, 
-                        show_perc: bool = True, 
+                        show_perc: bool = False, 
                         layer: str = "overall", 
                         show_interventions: bool = True, 
                         interventions_palette: str = "Dark2", 
@@ -667,8 +666,7 @@ def plot_spectral_radius(epimodel: Any,
         ax: Matplotlib axes to plot on. Creates new figure if None
         title: Plot title. If None, uses default title
         color: Color of the spectral radius line
-        normalize: Whether to normalize by initial value
-        show_perc: Whether to show as percentage change
+        show_perc: Whether to show as percentage change with respect to the initial value
         layer: Contact matrix layer to analyze
         show_interventions: Whether to show intervention periods
         interventions_palette: Color palette for interventions
@@ -701,11 +699,10 @@ def plot_spectral_radius(epimodel: Any,
     dates = list(epimodel.Cs.keys())
     rho = [np.linalg.eigvals(epimodel.Cs[date][layer]).max().real for date in dates]
     
-    # Normalize if requested
-    if normalize:
+    # Normalize and convert to percentage if requested
+    if show_perc:
         rho = np.array(rho) / rho[0]
-        if show_perc:
-            rho = (rho - 1) * 100
+        rho = (rho - 1) * 100
 
     # Plot spectral radius
     ax.plot(dates, rho, color=color, label='Spectral radius', linewidth=2)
@@ -738,10 +735,7 @@ def plot_spectral_radius(epimodel: Any,
 
     # Labels
     if ylabel is None:
-        if normalize:
-            ylabel = "Change in spectral radius (%)" if show_perc else "Normalized spectral radius"
-        else:
-            ylabel = "Spectral radius"
+        ylabel = "Change in spectral radius (%)" if show_perc else "Spectral radius"
     ax.set_ylabel(ylabel, fontsize=fontsize)
     ax.set_xlabel(xlabel, fontsize=fontsize)
 
