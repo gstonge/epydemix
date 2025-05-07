@@ -4,7 +4,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![Codecov](https://codecov.io/gh/epistorm/epydemix/branch/main/graph/badge.svg)
 
-![Alt text](https://github.com/epistorm/epydemix/blob/main/tutorials/img/epydemix-logo.png)
+![Alt text](https://raw.githubusercontent.com/epistorm/epydemix/main/tutorials/img/epydemix-logo.png)
 
 
 **[Documentation](https://epydemix.readthedocs.io/en/latest/)** | **[Website](https://www.epydemix.org/)** | **[Tutorials](https://github.com/epistorm/epydemix/tree/main/tutorials)**
@@ -14,26 +14,13 @@
 
 ## Installation
 
-### From TestPyPI (For Testing Purposes)
-
-To install the latest version of `epydemix` from TestPyPI, use the following command:
-
-```bash
-pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ epydemix
-```
-
----
-
-### From PyPI (Coming Soon)
-
-Once the package is released on the official PyPI repository, you can install it with:
+To install the latest version of `epydemix` from [PyPI](https://pypi.org/project/epydemix/), use the following command in a terminal or command prompt—ideally within a virtual environment to avoid dependency conflicts:
 
 ```bash
 pip install epydemix
 ```
 
 ---
-
 
 ## Quick Start
 
