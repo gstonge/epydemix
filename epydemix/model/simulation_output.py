@@ -55,10 +55,13 @@ class Trajectory:
         if fill_method == 'interpolate':
             df_comp_resampled = df_comp_resampled.interpolate(method='linear')
             # Handle edge cases
-            df_comp_resampled = df_comp_resampled.fillna(method='ffill').fillna(method='bfill')
+            df_comp_resampled = df_comp_resampled.ffill().bfill()
             df_trans_resampled = df_trans_resampled.fillna(0)
         else:
-            df_comp_resampled = df_comp_resampled.fillna(method=fill_method)
+            if fill_method == 'ffill':
+                df_comp_resampled = df_comp_resampled.ffill()
+            else: 
+                df_comp_resampled = df_comp_resampled.bfill()
             df_trans_resampled = df_trans_resampled.fillna(0)
 
         # Update 
