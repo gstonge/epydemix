@@ -66,7 +66,7 @@ We provide a series of tutorials to help you get started with **epydemix**.
 - [Tutorial 6](https://github.com/epistorm/epydemix/blob/main/tutorials/6_Advanced_Modeling_Features.ipynb): Advanced Modeling Features
 - [Tutorial 7](https://github.com/epistorm/epydemix/blob/main/tutorials/7_Covid-19_Example.ipynb): COVID-19 Case Study
 
-
+---
 ## Epydemix Data
 
 **epydemix** also provides access to a wealth of real-world population and contact matrix data through the [**epydemix_data**](https://github.com/epistorm/epydemix-data/) module. This dataset allows you to load predefined population structures, including age distribution and contact matrices for over 400 locations globally. You can use this data to create realistic simulations of disease spread in different geographies.
@@ -91,12 +91,30 @@ Epydemix can load data either locally from a folder or directly from online sour
 
 For more information about the available population and contact matrices and to download the data, please visit the [dedicated repository](https://github.com/epistorm/epydemix-data/).
 
+---
+## Citation 
+The preprint describing the development of Epydemix is available [here](https://www.medrxiv.org/content/10.1101/2025.05.07.25327151v1).
+To reference our work, please use the following citation:
+```
+@article {gozzi2025epydemix,
+	author = {Gozzi, Nicol{\`o} and Chinazzi, Matteo and Davis, Jessica T. and Gioannini, Corrado and Rossi, Luca and Ajelli, Marco and Perra, Nicola and Vespignani, Alessandro},
+	title = {Epydemix: An open-source Python package for epidemic modeling with integrated approximate Bayesian calibration},
+	elocation-id = {2025.05.07.25327151},
+	year = {2025},
+	doi = {10.1101/2025.05.07.25327151},
+	publisher = {Cold Spring Harbor Laboratory Press},
+	URL = {https://www.medrxiv.org/content/early/2025/05/08/2025.05.07.25327151},
+	eprint = {https://www.medrxiv.org/content/early/2025/05/08/2025.05.07.25327151.full.pdf},
+	journal = {medRxiv}
+}
+```
 
-
+---
 ## License
 
 This project is licensed under the GPL-3.0 License. See the [LICENSE](LICENSE) file for more details.
 
+---
 ## Contact
 
 For questions or issues, please open an issue on GitHub or contact the maintainer at `epydemix@isi.it`.
