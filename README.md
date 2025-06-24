@@ -1,5 +1,6 @@
 # Epydemix, the ABC of Epidemics
 [![GitHub stars](https://img.shields.io/github/stars/epistorm/epydemix.svg?style=social)](https://github.com/epistorm/epydemix/stargazers)
+[![PyPI Downloads](https://static.pepy.tech/badge/epydemix)](https://pepy.tech/projects/epydemix)
 [![Read the Docs](https://readthedocs.org/projects/epydemix/badge/?version=latest)](https://epydemix.readthedocs.io/en/latest/?badge=latest)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![Codecov](https://codecov.io/gh/epistorm/epydemix/branch/main/graph/badge.svg)
