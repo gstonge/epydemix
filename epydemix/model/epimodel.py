@@ -651,7 +651,8 @@ class EpiModel:
                        resample_frequency: Optional[str] = "D",
                        resample_aggregation_compartments: Optional[Union[str, dict]] = "last",
                        resample_aggregation_transitions: Optional[Union[str, dict]] = "sum",
-                       fill_method: Optional[str] = "ffill") -> SimulationResults:
+                       fill_method: Optional[str] = "ffill",
+                       use_jit: bool = False) -> SimulationResults:
         """
         Simulates the epidemic model multiple times over the given time period.
 
@@ -666,6 +667,7 @@ class EpiModel:
             resample_aggregation_compartments (str, optional): The aggregation method to use when resampling the compartments. Default is "last".
             resample_aggregation_transitions (str, optional): The aggregation method to use when resampling the transitions. Default is "sum".
             fill_method (str, optional): Method to fill NaN values after resampling. Default is "ffill".
+            use_jit (bool, optional): Whether to use JIT-compiled simulation for performance. Default is False.
 
         Returns:
             SimulationResults: An object containing all simulation trajectories.
@@ -688,7 +690,8 @@ class EpiModel:
                     resample_frequency=resample_frequency,
                     resample_aggregation_compartments=resample_aggregation_compartments,
                     resample_aggregation_transitions=resample_aggregation_transitions,
-                    fill_method=fill_method
+                    fill_method=fill_method,
+                    use_jit=use_jit
                 )
                 trajectories.append(trajectory)
         except Exception as e:
@@ -711,6 +714,7 @@ def simulate(epimodel,
              resample_aggregation_compartments: Optional[Union[str, dict]] = "last",
              resample_aggregation_transitions: Optional[Union[str, dict]] = "sum",
              fill_method: Optional[str] = "ffill",
+             use_jit: bool = False,
              **kwargs) -> Trajectory:
     """
     Runs a simulation of the epidemic model over the specified simulation dates.
@@ -726,6 +730,7 @@ def simulate(epimodel,
         resample_aggregation_compartments (str, optional): The aggregation method to use when resampling the compartments. Default is "last".
         resample_aggregation_transitions (str, optional): The aggregation method to use when resampling the transitions. Default is "sum".
         fill_method (str, optional): The method to use when filling NaN values after resampling. Default is "ffill".
+        use_jit (bool, optional): Whether to use JIT-compiled simulation for performance. Default is False.
         **kwargs: Additional parameters to overwrite model parameters during the simulation.
 
     Returns:
@@ -764,14 +769,25 @@ def simulate(epimodel,
     contact_matrices = [epimodel.Cs[date] for date in simulation_dates]
     
     # Run simulation with pre-computed contacts
-    compartments_evolution, transitions_evolution = stochastic_simulation(
-        T=len(simulation_dates),
-        contact_matrices=contact_matrices,  
-        epimodel=epimodel,
-        parameters=epimodel.definitions,
-        initial_conditions=initial_conditions,
-        dt=dt
-    )
+    if use_jit:
+        from .simulation_jit import stochastic_simulation_jit
+        compartments_evolution, transitions_evolution = stochastic_simulation_jit(
+            T=len(simulation_dates),
+            contact_matrices=contact_matrices,  
+            epimodel=epimodel,
+            parameters=epimodel.definitions,
+            initial_conditions=initial_conditions,
+            dt=dt
+        )
+    else:
+        compartments_evolution, transitions_evolution = stochastic_simulation(
+            T=len(simulation_dates),
+            contact_matrices=contact_matrices,  
+            epimodel=epimodel,
+            parameters=epimodel.definitions,
+            initial_conditions=initial_conditions,
+            dt=dt
+        )
 
     # Format the simulation output
     results = format_simulation_output(compartments_evolution, transitions_evolution, 
